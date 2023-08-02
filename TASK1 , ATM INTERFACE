@@ -1,1 +1,110 @@
 # CODSOFT
+package com.company;
+
+
+    import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+    public class atmInterface {
+        private static List<String> transactionHistory = new ArrayList<>();
+
+        private static double balance = 2000.00;
+
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.println("Welcome to the ATM!");
+
+            boolean quit = false;
+            while (!quit) {
+                displayMenu();
+
+                int option = scanner.nextInt();
+                scanner.nextLine(); // Consume newline character
+
+                switch (option) {
+                    case 1:
+                        displayTransactionHistory();
+                        break;
+                    case 2:
+                        System.out.print("Enter the amount to withdraw: ");
+                        double withdrawAmount = scanner.nextDouble();
+                        scanner.nextLine();
+                        withdraw(withdrawAmount);
+                        break;
+                    case 3:
+                        System.out.print("Enter the amount to deposit: ");
+                        double depositAmount = scanner.nextDouble();
+                        scanner.nextLine();
+                        deposit(depositAmount);
+                        break;
+                    case 4:
+                        System.out.print("Enter the amount to transfer: ");
+                        double transferAmount = scanner.nextDouble();
+                        scanner.nextLine();
+                        transfer(transferAmount);
+                        break;
+                    case 5:
+                        quit = true;
+                        System.out.println("Thank you for using the ATM!");
+                        break;
+                    default:
+                        System.out.println("Invalid option. Please try again.");
+                        break;
+                }
+            }
+
+            scanner.close();
+        }
+
+        private static void displayMenu() {
+            System.out.println("\nPlease select an option:");
+            System.out.println("1. Transaction History");
+            System.out.println("2. Withdraw");
+            System.out.println("3. Deposit");
+            System.out.println("4. Transfer");
+            System.out.println("5. Quit");
+            System.out.print("Option: ");
+        }
+
+        private static void displayTransactionHistory() {
+            System.out.println("\nTransaction History:");
+            for (String transaction : transactionHistory) {
+                System.out.println(transaction);
+            }
+        }
+
+        private static void withdraw(double amount) {
+            if (amount > balance) {
+                System.out.println("Insufficient funds.");
+            } else {
+                balance -= amount;
+                String transaction = "Withdraw: Rs" + amount;
+                transactionHistory.add(transaction);
+                System.out.println("Withdrawn Rs" + amount + " successfully.");
+                System.out.println("Current balance: Rs" + balance);
+            }
+        }
+
+        private static void deposit(double amount) {
+            balance += amount;
+            String transaction = "Deposit: Rs" + amount;
+            transactionHistory.add(transaction);
+            System.out.println("Deposited Rs" + amount + " successfully.");
+            System.out.println("Current balance: Rs" + balance);
+        }
+
+        private static void transfer(double amount) {
+            if (amount > balance) {
+                System.out.println("Insufficient funds.");
+            } else {
+                balance -= amount;
+                String transaction = "Transfer: Rs" + amount;
+                transactionHistory.add(transaction);
+                System.out.println("Transferred Rs" + amount + " successfully.");
+                System.out.println("Current balance: Rs" + balance);
+            }
+        }
+    }
+
