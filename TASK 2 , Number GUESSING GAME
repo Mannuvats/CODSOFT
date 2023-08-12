@@ -1,0 +1,55 @@
+package com.company;
+import java.util.Scanner;
+import java.util.Random;
+
+
+    public class NumberGuessingGame {
+
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            Random random = new Random();
+
+            System.out.println("Welcome to this Number Guessing Game!");
+            boolean playAgain = true;
+            int totalRounds = 0;
+            int totalAttempts = 0;
+
+            while (playAgain) {
+                totalRounds++;
+                int lowerBound = 1;
+                int upperBound = 100;
+                int secretNumber = random.nextInt(upperBound - lowerBound + 1) + lowerBound;
+                int attempts = 0;
+
+                System.out.printf("Round %d: I'm thinking of a number between %d and %d.%n", totalRounds, lowerBound, upperBound);
+
+                int maxAttempts = 10;  // You can adjust this to change the maximum number of attempts
+
+                while (attempts < maxAttempts) {
+                    System.out.print("Enter your number : ");
+                    int guess = scanner.nextInt();
+                    attempts++;
+                    totalAttempts++;
+
+                    if (guess < secretNumber) {
+                        System.out.println("Number is higher than this number!");
+                    } else if (guess > secretNumber) {
+                        System.out.println("Number is lower than this number!");
+                    } else {
+                        System.out.printf("Congratulations! You guessed the number %d in %d attempts.%n", secretNumber, attempts);
+                        break;
+                    }
+                }
+
+                if (attempts == maxAttempts) {
+                    System.out.printf("Sorry, you've reached the maximum number of attempts. The correct number was %d.%n", secretNumber);
+                }
+
+                System.out.print("Do you want to play another round? (yes/no): ");
+                String playAgainInput = scanner.next();
+                playAgain = playAgainInput.equalsIgnoreCase("yes");
+            }
+
+            System.out.printf("Game Over. Your total score is %d attempts in %d rounds.%n", totalAttempts, totalRounds);
+        }
+    }
